@@ -184,7 +184,7 @@ Return a compact report with:
 
 If the next step is interactive installation or repair, hand off to:
 
-- `configure-ecc`
+- host plugin management (`dsh plugin`) or manual configuration
 
 If the next step is overlap cleanup or catalog review, hand off to:
 

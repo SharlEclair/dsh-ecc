@@ -4,11 +4,11 @@ Adaptation workspace for porting [affaan-m/ECC](https://github.com/affaan-m/ECC)
 **DeepSeek Harness (DSH)**. Upstream port by [gongyijie85/dsh-ecc](https://github.com/gongyijie85/dsh-ecc) (MIT).
 
 This is a **fork of a port**. The goal is not to add skills — it is to make the existing
-274 skill files correct for DSH instead of for Claude Code.
+273 skill files correct for DSH instead of for Claude Code.
 
 ## What this repo is
 
-A Cordis plugin that registers the 274 `skills/<name>/SKILL.md` files into DSH's `ctx.skills`
+A Cordis plugin that registers the 273 `skills/<name>/SKILL.md` files into DSH's `ctx.skills`
 registry. Almost all runtime logic lives in [`lib/index.js`](lib/index.js) (~195 lines).
 Skill bodies are plain Markdown injected into agent context.
 
@@ -18,7 +18,7 @@ only reads Markdown. Keep it that way.
 ## Invariants — do not break these
 
 1. **`npm run verify` must pass before every commit.** It is the only real test.
-2. `scripts/verify-provider.mjs` holds a **hardcoded exact set of 274 skill names** (L21–L109).
+2. `scripts/verify-provider.mjs` holds a **hardcoded exact set of 273 skill names** (L21–L109).
    Adding, renaming, or removing a skill directory *requires* updating that set, or the script
    fails twice: once for an unexpected skill, once for a missing one.
 3. **Skill directory name must equal the `name:` in that skill's frontmatter.** The verifier
@@ -85,7 +85,7 @@ Key facts already verified — do not re-litigate:
 ## Verification before claiming done
 
 ```powershell
-npm run verify        # must end: OK: all 274 ecc skills discovered and get() passes
+npm run verify        # must end: OK: all 273 ecc skills discovered and get() passes
 git diff --stat       # confirm you changed what you meant to
 ```
 

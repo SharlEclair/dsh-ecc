@@ -94,6 +94,10 @@ dsh plugin --profile web add D:\plugins\dsh-ecc
   - 带辅助文件的 6 个(`continuous-learning`、`frontend-slides`、`openclaw-persona-forge`、
     `security-review`、`skill-comply`、`visa-doc-translate`)
 
+> **注(2026-10-11)**:`configure-ecc` 已在本包中**退役删除**——它是面向 Claude Code /
+> Codex / Kimi 的上游安装向导,在 DSH 下无对应含义。上方 274/286 是**上游移植覆盖率**
+> (274 + 未移植 12 = 286);本包**当前生效技能为 273**。
+
 ## 移植说明(对比上游)
 
 - **来源**:`skills/<name>/SKILL.md` 原样复制(标准格式,frontmatter 含
@@ -109,7 +113,7 @@ dsh plugin --profile web add D:\plugins\dsh-ecc
 同 [mattpocock-skills-dsh](https://github.com/gongyijie85/mattpocock-skills-dsh)
 (host 层 `ctx.skills.registerProvider`;零运行时依赖;原生解析折叠 YAML
 frontmatter)。往 `skills/<kebab-name>/SKILL.md` 放文件即自动发现;验证:
-`npm run verify`(274/274)。
+`npm run verify`(273/273)。
 
 ## 许可证
 

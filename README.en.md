@@ -58,11 +58,16 @@ Restart the profile (`dsh web`) — the skills then load with the `skill` tool.
   continuous-learning-v2) and 6 with companion files — unless a hooks/commands
   bridge layer is built later.
 
+> **Note (2026-10-11):** `configure-ecc` has been **retired and deleted** from this
+> package — it is an upstream setup wizard for Claude Code / Codex / Kimi with no DSH
+> equivalent. The 274/286 above is **upstream port coverage** (274 ported + 12 not
+> ported = 286); the package's **currently active skill count is 273**.
+
 ## Adaptation notes
 
 - `skills/<name>/SKILL.md` copied verbatim (standard format, frontmatter carries
   `metadata.origin: ECC`).
-- Zero harness-specific references in all 274 ported skills; only 2 command
+- Zero harness-specific references in all 273 ported skills; only 2 command
   references were renamed to DSH bare names in v0.1 (`/bug-check` →
   `bug-check`, `/prompt-optimize` → `prompt-optimizer`).
 - Skill identity comes from the frontmatter `name` (e.g. the five
@@ -76,7 +81,7 @@ Restart the profile (`dsh web`) — the skills then load with the `skill` tool.
 Host-layer `ctx.skills.registerProvider` (same pattern as
 [mattpocock-skills-dsh](https://github.com/gongyijie85/mattpocock-skills-dsh)).
 Drop a `skills/<kebab-name>/SKILL.md` and it is auto-discovered. Verify with
-`npm run verify` (274/274).
+`npm run verify` (273/273).
 
 ## License
 

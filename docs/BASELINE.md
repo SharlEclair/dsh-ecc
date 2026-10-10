@@ -25,14 +25,23 @@ Set-Location C:\Users\91704\Desktop\dsh-ecc
 node scripts/verify-provider.mjs
 ```
 
-Result:
+Result at that commit:
 
 ```
 OK: all 274 ecc skills discovered and get() passes
 ```
 
 All 274 candidates were listed, `get()` returned content and a `resourceBase` for each, and no
-description started with `>`. **This is the known-good state. It must still pass after every change.**
+description started with `>`.
+
+> **Historical snapshot.** The figures immediately above record the untouched clone at commit
+> `e73abf7`, *before* any adaptation. They are the reference point, not the current state.
+>
+> *2026-10-11 — `configure-ecc` was retired (an upstream setup wizard for Claude Code / Codex /
+> Kimi that has no DSH meaning), so the expected count and the passing message are now **273**.
+> The 274 above stays as the recorded baseline.*
+
+The current equivalent of the check above must still pass after every change.
 
 ## Installed DSH (the target harness)
 

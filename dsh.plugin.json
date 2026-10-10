@@ -2,7 +2,7 @@
   "id": "gongyijie85/dsh-ecc",
   "version": "0.5.5",
   "main": "./lib/index.js",
-  "description": "ECC (227k-star operator system) skills for DeepSeek Harness — progressive port of 274 curated single-file skills (agentic engineering, evaluation, testing, patterns, vertical domains, docs). Adapted from affaan-m/ECC (MIT)",
+  "description": "ECC (227k-star operator system) skills for DeepSeek Harness — progressive port of 273 curated single-file skills (agentic engineering, evaluation, testing, patterns, vertical domains, docs). Adapted from affaan-m/ECC (MIT)",
   "engines": {
     "dsh": ">=0.1.0-rc.6"
   },
@@ -55,7 +55,6 @@
       "competitive-report-structure",
       "compose-multiplatform-patterns",
       "config-gc",
-      "configure-ecc",
       "connections-optimizer",
       "content-engine",
       "content-hash-cache-pattern",

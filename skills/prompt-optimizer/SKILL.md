@@ -38,7 +38,7 @@ and output a complete optimized prompt the user can paste and run.
 
 - User wants the task done directly (just execute it)
 - User says "优化代码", "优化性能", "optimize this code", "optimize performance" — these are refactoring tasks, not prompt optimization
-- User is asking about ECC configuration (use `configure-ecc` instead)
+- User is asking about ECC or plugin configuration (configure host/plugin directly, not via prompt optimization)
 - User wants a skill inventory (use `skill-stocktake` instead)
 - User says "just do it" or "直接做"
 
@@ -390,7 +390,7 @@ Recommended: Opus 5 for blueprint planning, Sonnet 5 for phase execution.
 
 | Component | When to Reference |
 |-----------|------------------|
-| `configure-ecc` | User hasn't set up ECC yet |
+| Host plugin setup (`dsh plugin`) | User hasn't set up ECC skills or plugins yet |
 | `skill-stocktake` | Audit which components are installed (use instead of hardcoded catalog) |
 | `search-first` | Research phase in optimized prompts |
 | `blueprint` | EPIC-scope optimized prompts (invoke as skill, not command) |

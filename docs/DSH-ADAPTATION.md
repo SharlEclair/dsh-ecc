@@ -1,8 +1,8 @@
 # DSH Adaptation Plan
 
-Turning the 274 ported ECC skills from Claude-Code-shaped into DSH-native.
+Turning the 273 ported ECC skills from Claude-Code-shaped into DSH-native.
 
-**Baseline verified** — `node scripts/verify-provider.mjs` → `OK: all 274 ecc skills discovered and get() passes` (Node v24.15.0).
+**Baseline verified** — `node scripts/verify-provider.mjs` → `OK: all 273 ecc skills discovered and get() passes` (Node v24.15.0).
 
 ## Why this work exists
 
@@ -12,7 +12,7 @@ Its own README states the only adaptation was two command references
 
 Measured on this clone:
 
-| Signal | Files / 274 |
+| Signal | Files / 273 |
 |---|---|
 | mention `claude` | 80 (29%) |
 | reference `.claude/` paths | 27 (10%) |
@@ -108,7 +108,7 @@ unified-memory       workspace-surface-audit
 Tier A and B overlap (`agentic-os`, `config-gc`, `security-scan`, `unified-memory`,
 `autonomous-agent-harness`, `workspace-surface-audit`). Handle overlaps once, in the earlier tier.
 
-**Estimated distinct files to touch: ~40 of 274.** The other ~234 are generic engineering
+**Estimated distinct files to touch: ~40 of 273.** The other ~234 are generic engineering
 guidance that happens to be harness-neutral; leave them alone.
 
 ## Recommended first batch
@@ -126,7 +126,7 @@ Do them in this order:
 
 ## Guardrails
 
-- `npm run verify` before every commit; it must stay at `OK: all 274`.
+- `npm run verify` before every commit; it must stay at `OK: all 273`.
 - One skill per commit: `fix(<skill-name>): <what changed>`.
 - Read [.agents/rules/skill-adaptation.md](../.agents/rules/skill-adaptation.md) before editing —
   especially the "retire instead of fake" rule.
@@ -137,8 +137,8 @@ Do them in this order:
 
 1. **Is the plugin even the right delivery mechanism?** DSH already discovers skills natively
    from `.dsh/skills`, `.agents/skills`, and `~/.agents/skills`. Mounting this plugin puts all
-   274 into every session's catalog. For your own use, copying selected skills may be better
-   than shipping 274. Decide this before polishing all 40 files.
+   273 into every session's catalog. For your own use, copying selected skills may be better
+   than shipping 273. Decide this before polishing all 40 files.
 2. **Which skills do you actually want?** Adapting 40 files nobody loads is waste. Pick the
    subset first, then adapt only that subset.
 3. **Upstream sync.** This clone is `v0.6.0`; npm has `0.6.1`. Decide whether you track upstream

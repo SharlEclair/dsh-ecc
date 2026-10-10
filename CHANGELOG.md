@@ -1,3 +1,16 @@
+## [Unreleased]
+
+### Removed
+
+- **`configure-ecc` 技能退役删除**(DSH 适配)。该技能是面向 Claude Code / Codex / Kimi 的
+  上游 ECC 安装向导,引用的 `claude plugin`、`codex plugin`、`./.kimi-code`、
+  `$CLAUDE_PLUGIN_ROOT/scripts/setup.js`、Claude hook profiles 在 DSH 下**无一存在**;
+  且插件在 DSH 中由 Cordis 加载,安装后不存在「会话内向导」这一生命周期。按
+  `.agents/rules/skill-adaptation.md` 的「retire instead of fake」原则删除,而非改写。
+  同步:期望名单 `scripts/verify-provider.mjs`、`dsh.plugin.json` 的
+  `contributes.skills`(274 → 273)、三处交叉引用(`agent-sort`、`config-gc`、
+  `prompt-optimizer`)改为 `dsh plugin` 指引。生效技能数 **273**。
+
 ## [0.6.0] - 2026-09-11
 
 ### Changed

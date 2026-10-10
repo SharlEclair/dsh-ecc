@@ -62,7 +62,7 @@ Or push and click **Compare & pull request** on github.com.
 State plainly, because the maintainer will check:
 
 - [ ] Which skills changed and **why each was wrong** for DSH
-- [ ] `npm run verify` output (paste the `OK: all 274` line)
+- [ ] `npm run verify` output (paste the `OK: all 273` line)
 - [ ] That `scripts/verify-provider.mjs` was updated if the skill set changed
 - [ ] DSH version tested against (this workspace: `0.2.0-rc.2`)
 - [ ] Whether you ran it inside a live DSH session, or only the standalone verifier

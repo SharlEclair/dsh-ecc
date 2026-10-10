@@ -69,7 +69,7 @@ const expected = new Set([
   'article-writing', 'automation-audit-ops', 'blender-motion-state-inspection',
   'blueprint', 'brand-discovery', 'brand-voice', 'carrier-relationship-management',
   'cisco-ios-patterns', 'ck', 'claude-devfleet', 'clickhouse-io', 'codehealth-mcp',
-  'competitive-platform-analysis', 'competitive-report-structure', 'configure-ecc',
+  'competitive-platform-analysis', 'competitive-report-structure',
   'connections-optimizer', 'content-engine', 'content-hash-cache-pattern',
   'cost-tracking', 'crosspost', 'customer-billing-ops', 'customs-trade-compliance',
   'dashboard-builder', 'data-throughput-accelerator', 'defi-amm-security',
