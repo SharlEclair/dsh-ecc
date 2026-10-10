@@ -1,6 +1,6 @@
 ---
 name: security-scan
-description: Scan your Claude Code configuration (.claude/ directory) for security vulnerabilities, misconfigurations, and injection risks using AgentShield. Checks CLAUDE.md, settings.json, MCP servers, hooks, and agent definitions. Use when auditing a .claude/ directory — CLAUDE.md, settings.json, MCP servers, hooks, or agent definitions.
+description: How to run the external AgentShield scanner (npx ecc-agentshield) against AI-agent configuration for vulnerabilities, misconfigurations, and injection risks. AgentShield targets Claude Code configs (.claude/, CLAUDE.md, settings.json, mcp.json, hooks, agents); DSH coverage is not established. Use when the user explicitly wants AgentShield or is auditing Claude Code configuration.
 metadata:
   origin: ECC
 ---
@@ -8,6 +8,18 @@ metadata:
 # Security Scan Skill
 
 Audit your Claude Code configuration for security issues using [AgentShield](https://github.com/affaan-m/agentshield).
+
+> **Harness scope — read before using.** This skill is a usage manual for the external
+> `ecc-agentshield` package (v1.6.0, not installed on this machine). It is **not** a DSH security
+> feature and it does **not** scan DSH configuration.
+>
+> - The scanner's stated target is Claude Code configuration. Whether it understands DSH's
+>   equivalents (`AGENTS.md`, `~/.dsh/.credentials.yaml`, `cordis.patch.yml`, the plugin tree)
+>   is **unverified** and must not be assumed.
+> - Running `--opus` requires `ANTHROPIC_API_KEY` and bills Anthropic; it is not a DeepSeek call.
+> - **DSH ships no configuration scanner.** Its security surface is the sandbox and approval
+>   plugin family — see "DSH security surface" below before reaching for an external tool.
+
 
 ## When to Activate
 
@@ -137,6 +149,34 @@ Add to your CI pipeline:
 | C | 60-74 | Needs attention |
 | D | 40-59 | Significant risks |
 | F | 0-39 | Critical vulnerabilities |
+
+## DSH security surface
+
+Verified against the installed DSH (`0.2.0-rc.2`). **DSH has no scanner**; its controls are
+runtime enforcement plugins, which is a different kind of thing:
+
+| Plugin | Role |
+|---|---|
+| `dsh-sandbox`, `dsh-sandbox-policy`, `dsh-sandbox-local` | sandbox mode ladder: `read-only` → `workspace-write` → `danger-full-access` |
+| `dsh-bash-sandbox`, `dsh-pwsh-sandbox` | confine shell command file effects |
+| `dsh-fs-sandbox` | confine model file writes/edits; denies with `FS_SANDBOX_DENIED` |
+| `dsh-permission-presets` | the user-facing Permissions select bundling sandbox mode + approval policy |
+| `dsh-user-approval` | approval policy `ask` / `never`; `ask` fails closed |
+| `dsh-authorization` | authorization service |
+| `dsh-sandbox-windows-acl` | Windows ACL diagnosis/repair |
+
+Two limitations worth remembering, because they are easy to over-trust:
+
+- **Sandbox modes govern file effects only.** Network access is unrestricted, and process
+  visibility is backend-specific. The sandbox is not a network boundary.
+- Escalation is strictly *wider*: `read-only` → `workspace-write` → `danger-full-access`, per call,
+  with approval. There is no path to a narrower mode.
+
+To review the live permission posture:
+
+```powershell
+dsh --dump-config    # inspect sandbox / permission / approval rows
+```
 
 ## Interpreting Results
 

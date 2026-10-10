@@ -85,5 +85,6 @@ If `--ff-only` fails, you have commits on `main`. Move them to a branch rather t
 - **Do not** `git push --force` to `main` on either remote.
 - **Do not** open one giant PR adapting all ~40 files. Small, reviewable PRs land; a 40-file
   diff will not. Recommended: one PR per tier.
-- Upstream is `v0.6.0` here while npm carries `0.6.1`. Rebase on `upstream/main` before opening
-  a PR so you are not asking to merge against a stale base.
+- Upstream's GitHub `main` is `0.6.0` (this clone matches it), while npm carries `0.6.1` with no
+  matching git tag. Rebase on `upstream/main` before opening a PR so you are not asking to merge
+  against a stale base.

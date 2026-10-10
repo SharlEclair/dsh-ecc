@@ -42,7 +42,7 @@ Exact offending lines, verified on this clone:
 | Skill | Line | Problem |
 |---|---|---|
 | `configure-ecc` | L16 | `npx ecc-universal setup` — a Claude Code setup wizard, wrong harness |
-| `security-scan` | L3 | **frontmatter `description` advertises scanning `.claude/`** — the catalog entry itself is wrong, so this is the most visible defect in the port |
+| ~~`security-scan`~~ | ~~L3~~ | ~~**frontmatter `description` advertises scanning `.claude/`**~~ — **FIXED**, see below |
 | `security-scan` | L15, L26, L49 | `.claude/settings.json`, `CLAUDE.md`, `mcp.json`, "current project's `.claude/` directory" |
 | `security-scan` | L36, L42 | `npx ecc-agentshield --version` / `scan .` — not installed |
 | `unified-memory` | L28 | `node scripts/ecc.js memory ...` — script does not exist in this repo |
@@ -50,6 +50,31 @@ Exact offending lines, verified on this clone:
 
 `security-scan` is the highest-value first fix: a broken description is visible to every session
 that lists the skill catalog, whereas a broken body line only misleads once loaded.
+
+### ✔ `security-scan` — description fixed
+
+The frontmatter `description` no longer claims to scan `.claude/` for DSH. It now describes the
+skill accurately: a usage manual for the **external** `ecc-agentshield` package, whose target is
+Claude Code configuration, with **DSH coverage explicitly recorded as not established**.
+
+Verified facts behind that wording:
+
+| Claim | Evidence |
+|---|---|
+| `ecc-agentshield` is real and maintained | npm 1.6.0, MIT, published 2026 |
+| It targets Claude Code, not DSH | its own description: "Scans Claude Code setups" |
+| It is not installed on this machine | absent from `%APPDATA%\npm\node_modules` |
+| `--opus` bills Anthropic | depends on `@anthropic-ai/sdk`; needs `ANTHROPIC_API_KEY` |
+| **DSH ships no config scanner** | installed `@deepseek-ai` tree has sandbox/approval/permission plugins only |
+
+A "DSH security surface" section was added to the skill body mapping the real DSH controls
+(sandbox ladder, approval policy, permission presets) and recording the two easy-to-over-trust
+limitations: sandbox modes govern **file effects only** (network is unrestricted), and escalation
+is strictly wider — there is no path back to a narrower mode.
+
+**Still open in this file:** the body's Claude-specific remediation guidance (L15, L26, L36, L42,
+L49 region) has not been rewritten. Whether AgentShield can scan DSH config at all is unverified —
+do not invent a mapping.
 
 ### Tier A — broken assumptions (30 files)
 
@@ -123,9 +148,9 @@ Do them in this order:
 
 | Tier | Files | Done |
 |---|---|---|
-| C | 3 | 0 |
+| C | 3 | **1** (`security-scan` description) |
 | A | 30 | 0 |
 | B | 13 | 0 |
-| **distinct** | **~40** | **0** |
+| **distinct** | **~40** | **1** |
 
 Update this table as work lands. Do not mark a tier done without a green `npm run verify`.

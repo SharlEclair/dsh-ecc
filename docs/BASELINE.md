@@ -12,7 +12,9 @@ on this machine, not copied from documentation.
 | Branch | `main` |
 | Commit | `e73abf7` — `chore(release): v0.6.0 - rename design-system to frontend-design-system` |
 | Repo version | `0.6.0` |
-| Published npm version | `0.6.1` ← **one ahead of this clone** |
+| `origin/main` | `e73abf7`, also version `0.6.0` — the clone is current with the repository |
+| Latest git tag | `v0.6.0` — **there is no `v0.6.1` tag** |
+| Published npm version | `0.6.1` (npm registry) |
 | Node | `v24.15.0` |
 | Files in checkout | 291 |
 
@@ -61,3 +63,15 @@ description started with `>`. **This is the known-good state. It must still pass
 - **`gh` not authenticated** (`gh` 2.102.0 installed). Run `gh auth login` once.
 - Plugin is **not** installed into the live DSH profile, so runtime behaviour inside DSH's
   Web UI is unverified.
+
+## Version note — corrected
+
+An earlier claim that this clone was "one behind" npm was imprecise. What is actually true:
+
+- The **GitHub repository** is at `0.6.0` on `main`, tagged `v0.6.0`. This clone matches it exactly.
+- **npm** carries `0.6.1`, a version with **no corresponding git tag**.
+
+So npm is ahead of the repository, not the clone behind the repository. That is mildly irregular
+for a project whose release flow is tag-driven, and it means `0.6.1`'s contents are not reviewable
+in git. If you ever need exactly what npm ships, diff the published tarball against this checkout
+rather than assuming the tags describe it.
