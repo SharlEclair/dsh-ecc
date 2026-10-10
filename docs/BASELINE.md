@@ -3,7 +3,37 @@
 Recorded before any adaptation, so regressions are detectable. Everything here was executed
 on this machine, not copied from documentation.
 
-## Environment
+This file has two parts: the **pre-change baseline** (the untouched clone, kept as the reference
+point) and the **current state** (below). Do not overwrite the baseline figures — they are the
+only record of what things looked like before.
+
+## Current state
+
+| Item | Value |
+|---|---|
+| HEAD | `030dd31` — Tier C complete |
+| Branch | `main`, tracking `origin/main` (in sync) |
+| Fork | `SharlEclair/dsh-ecc` — 6 commits ahead, 0 behind upstream |
+| Remotes | `origin` → your fork · `upstream` → fetch-only (push URL disabled) |
+| Active skills | **273** (`configure-ecc` retired) |
+| Verifier | `OK: all 273 ecc skills discovered and get() passes` |
+| Manifest | `dsh.plugin.json` `contributes.skills` = 273, matches disk |
+| Upstream issue | [gongyijie85/dsh-ecc#2](https://github.com/gongyijie85/dsh-ecc/issues/2) — open, awaiting the maintainer's call on `configure-ecc` |
+
+Commits, in order:
+
+```
+030dd31 docs: mark Tier C complete; scope Tier A as adaptation-vs-retirement split
+ea65171 fix(unified-memory): replace broken in-repo CLI and .mcp.json references with DSH MCP config
+e4d06d1 fix(configure-ecc): retire inapplicable Claude/Codex/Kimi setup wizard
+8ee1bc4 fix(security-scan): stop advertising .claude/ scanning; document real DSH security surface
+785815a chore: pin LF line endings; add exact Tier C evidence to adaptation plan
+3d325b9 docs: add DSH adaptation workspace (AGENTS.md, rules, triage plan, baseline, fork guide)
+```
+
+## Pre-change baseline (untouched clone — historical)
+
+### Environment
 
 | Item | Value |
 |---|---|

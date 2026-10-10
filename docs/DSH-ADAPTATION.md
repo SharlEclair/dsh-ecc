@@ -1,8 +1,13 @@
 # DSH Adaptation Plan
 
-Turning the 273 ported ECC skills from Claude-Code-shaped into DSH-native.
+Turning the 274 ported ECC skills from Claude-Code-shaped into DSH-native.
 
 **Baseline verified** — `node scripts/verify-provider.mjs` → `OK: all 273 ecc skills discovered and get() passes` (Node v24.15.0).
+
+> **Where the evidence lives.** Every Tier-C change is backed by a specific verification, recorded
+> in [Evidence and decision trail](#evidence-and-decision-trail) below. Decisions and their
+> provenance are in [SESSION-NOTES.md](SESSION-NOTES.md). Do not re-open a settled decision
+> without new evidence — cite the ledger entry instead.
 
 ## Why this work exists
 
@@ -188,3 +193,43 @@ strategy first:
   commits are reviewable; a fifteen-skill deletion is a redesign of the package.
 - **If the goal is your own fork** — Tier A retirements are fine, and arguably should happen.
   But then the upstream-sync question matters much more.
+
+## Evidence and decision trail
+
+Every Tier-C change, with the verification behind it. "Verified" below means the check was
+actually run against the named artifact, not read from documentation.
+
+| # | Claim | Verification | Verdict | Commit |
+|---|---|---|---|---|
+| E1 | `security-scan`'s frontmatter `description` advertised scanning `.claude/` for DSH | Read the frontmatter; descriptions are what a session catalogs | **Confirmed** — the catalog entry itself was false | `8ee1bc4` |
+| E2 | `ecc-agentshield` is real but Claude-Code-targeted | npm registry: v1.6.0, MIT, deps include `@anthropic-ai/sdk`; own description says "Scans Claude Code setups" | **Confirmed** — and **not installed** on this machine | `8ee1bc4` |
+| E3 | DSH ships no configuration scanner | Enumerated the installed `@deepseek-ai` tree: sandbox / approval / permission plugins only | **Confirmed** — DSH's controls are runtime enforcement, not scanning | `8ee1bc4` |
+| E4 | DSH does not read `.mcp.json` | Grepped installed `@deepseek-ai/dsh-mcp-client` and `dsh-mcp-resources` | **Confirmed** — zero hits | `ea65171` |
+| E5 | DSH MCP config is a plugin row | Read `dsh-mcp-client` `Config` schema (L780–L793) | **Confirmed** — `transport` / `serverName` / `command` (+ optional `args`, `env`) | `ea65171` |
+| E6 | `dsh` is a valid `ECC_MEMORY_HARNESS` value | Unpacked `ecc-universal@2.2.3` (not installed globally) and read the source | **Confirmed** — see below | `ea65171` |
+| E7 | Retiring a skill does not require editing the verifier's count | Read `verify-provider.mjs` L141: prints `${expected.size}`, computed from the Set | **Confirmed** — the pass message self-updates | `e4d06d1` |
+| E8 | `configure-ecc` has no DSH meaning | Read the whole file: every instruction targets `claude plugin` / `codex plugin` / `./.kimi-code` / `$CLAUDE_PLUGIN_ROOT` / Claude hook profiles | **Confirmed** — **retired**, not adapted | `e4d06d1` |
+
+### E6 in detail — why `dsh` is a legal harness id
+
+The skill hardcoded `ECC_MEMORY_HARNESS=codex`, which every DSH reader would have copied. The
+value is a free-form slug, not an enum:
+
+```javascript
+// ecc-universal@2.2.3 scripts/lib/memory-vault-format.js:28
+const SLUG_PATTERN = /^[a-z0-9][a-z0-9._-]{0,63}$/;
+
+// scripts/memory-mcp.mjs (resolveServiceSecurity) — throws at startup if it does not match
+```
+
+Confirmed against three independent artifacts in the same package: the server's startup check,
+the slug constant, and `schemas/memory.schema.json`'s `#/definitions/slug`. No file checks a
+harness whitelist.
+
+**Cross-harness sharing is unaffected.** Reads filter on `target_harnesses`, which defaults to
+`['all']` (`memory-vault.js:310`, `memory-mcp.mjs:285`), so a memory authored under `dsh` stays
+readable by every other harness unless the author narrows it deliberately.
+
+**Consequence now documented in the skill:** an uppercase value such as `DeepSeek-Harness` makes
+the MCP server *throw at startup*, not merely fail one call.
+

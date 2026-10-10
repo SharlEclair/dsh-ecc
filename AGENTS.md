@@ -59,6 +59,23 @@ Tier C first (3 files, entirely broken), then Tier A, then Tier B.
   and mark it** rather than shipping a plausible-looking lie. See the "Retire instead of fake"
   rule in [.agents/rules/skill-adaptation.md](.agents/rules/skill-adaptation.md).
 
+## Settled decisions — do not re-litigate
+
+Tier C is complete and every change is backed by a recorded verification. Before proposing to
+revisit one, read the ledger and cite what changed:
+
+- **[docs/DSH-ADAPTATION.md](docs/DSH-ADAPTATION.md#evidence-and-decision-trail)** — claim →
+  verification → verdict → commit, for each of the three Tier-C items.
+- **[docs/SESSION-NOTES.md](docs/SESSION-NOTES.md)** — where the decisions came from, and the five
+  defects the review gate caught.
+
+Two specific things that look wrong but are not, both already investigated:
+
+- `configure-ecc` was **retired, not adapted** — it is an upstream setup wizard for Claude Code /
+  Codex / Kimi with no DSH equivalent. See ledger E8.
+- The READMEs say **274/286** while the active count is **273**. That is deliberate: 274/286 is
+  *upstream port coverage* (274 + 12 un-ported = 286), not the count of skills that ship.
+
 ## Source of truth for DSH behaviour
 
 **Do not guess DSH APIs, config keys, or package names.** Verify against the installed
