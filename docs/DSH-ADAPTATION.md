@@ -36,11 +36,20 @@ much larger project; do not start it inside a skill-cleanup branch.
 
 ### Tier C — entirely broken (do these first)
 
-References the `ecc` CLI / `scripts/ecc` that does not exist in this workspace.
+References the `ecc` / `ecc-universal` / `ecc-agentshield` CLI that is not installed here.
+Exact offending lines, verified on this clone:
 
-- `configure-ecc`
-- `security-scan`
-- `unified-memory`
+| Skill | Line | Problem |
+|---|---|---|
+| `configure-ecc` | L16 | `npx ecc-universal setup` — a Claude Code setup wizard, wrong harness |
+| `security-scan` | L3 | **frontmatter `description` advertises scanning `.claude/`** — the catalog entry itself is wrong, so this is the most visible defect in the port |
+| `security-scan` | L15, L26, L49 | `.claude/settings.json`, `CLAUDE.md`, `mcp.json`, "current project's `.claude/` directory" |
+| `security-scan` | L36, L42 | `npx ecc-agentshield --version` / `scan .` — not installed |
+| `unified-memory` | L28 | `node scripts/ecc.js memory ...` — script does not exist in this repo |
+| `unified-memory` | L146 | references ECC's default `.mcp.json` |
+
+`security-scan` is the highest-value first fix: a broken description is visible to every session
+that lists the skill catalog, whereas a broken body line only misleads once loaded.
 
 ### Tier A — broken assumptions (30 files)
 
@@ -79,11 +88,16 @@ guidance that happens to be harness-neutral; leave them alone.
 
 ## Recommended first batch
 
-Tier C — three files, fully broken, small enough to finish and verify in one sitting:
+Tier C — three files, fully broken, small enough to finish and verify in one sitting.
+Do them in this order:
 
-1. `configure-ecc/SKILL.md`
-2. `security-scan/SKILL.md`
-3. `unified-memory/SKILL.md`
+1. **`security-scan/SKILL.md`** — fix the frontmatter `description` first (it advertises
+   `.claude/` to the whole catalog), then the body's broken paths and CLI calls.
+2. `unified-memory/SKILL.md` — remove the `scripts/ecc.js` and `.mcp.json` dependencies, or
+   mark the skill as requiring ECC infrastructure it does not have here.
+3. `configure-ecc/SKILL.md` — this one configures *ECC for Claude Code*; it may not have a
+   DSH meaning at all. Decide between: rewrite to describe this plugin's own install, or
+   **retire it** (see the retire rule). Say which and why in the commit.
 
 ## Guardrails
 

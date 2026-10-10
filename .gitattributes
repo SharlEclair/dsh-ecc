@@ -1,0 +1,5 @@
+# Normalize line endings so a Windows checkout does not rewrite every line of a
+# skill file and bury the real diff in a PR.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
