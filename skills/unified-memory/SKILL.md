@@ -24,9 +24,7 @@ ecc memory --help
 command -v ecc-memory-mcp
 ```
 
-A repository checkout may instead run the CLI as
-`node scripts/ecc.js memory ...`, but MCP configurations that name
-`ecc-memory-mcp` still require that binary on `PATH`.
+MCP configurations that name `ecc-memory-mcp` require that binary on `PATH`.
 
 ## When To Use
 
@@ -143,15 +141,21 @@ Repair reported files manually. The doctor does not delete or rewrite memory.
 
 ## MCP Setup
 
-The stdio server is optional and is not enabled by ECC's default `.mcp.json`.
-After installing ECC, copy the `ecc-memory-vault` entry from
-`mcp-configs/mcp-servers.json` into each harness where tool access is useful.
-Replace its placeholder with a lowercase server identity. The server command
-is:
+The stdio server is optional. DSH does not read `.mcp.json`; instead, register
+a `@deepseek-ai/dsh-mcp-client` plugin row using `transport: stdio`,
+`serverName: ecc-memory-mcp`, and pass `ECC_MEMORY_HARNESS` in `env`:
 
-```text
-ECC_MEMORY_HARNESS=codex ecc-memory-mcp
+```yaml
+transport: stdio
+serverName: ecc-memory-mcp
+command: ecc-memory-mcp
+env:
+  ECC_MEMORY_HARNESS: dsh
 ```
+
+The value must be a lowercase slug matching `^[a-z0-9][a-z0-9._-]{0,63}$` — an
+uppercase value such as `DeepSeek-Harness` makes the MCP server throw at startup,
+not just one call.
 
 The MCP process binds writes and target filtering to
 `ECC_MEMORY_HARNESS`; tool callers cannot claim another source identity or
