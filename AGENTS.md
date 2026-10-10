@@ -15,6 +15,9 @@ Skill bodies are plain Markdown injected into agent context.
 **Nothing here executes commands, writes files, or makes network calls at runtime.** The plugin
 only reads Markdown. Keep it that way.
 
+**Consuming this repo has two modes** — selective copy (recommended) or plugin install, which
+adds ~16–18k tokens to every session. See [docs/USAGE.md](docs/USAGE.md) before advising either.
+
 ## Invariants — do not break these
 
 1. **`npm run verify` must pass before every commit.** It is the only real test.
