@@ -141,16 +141,50 @@ Do them in this order:
    than shipping 273. Decide this before polishing all 40 files.
 2. **Which skills do you actually want?** Adapting 40 files nobody loads is waste. Pick the
    subset first, then adapt only that subset.
-3. **Upstream sync.** This clone is `v0.6.0`; npm has `0.6.1`. Decide whether you track upstream
-   or diverge, because divergence makes future rebases harder.
+3. **Upstream sync.** Upstream GitHub `main` is `0.6.0` (this clone matches it); npm carries
+   `0.6.1` with no matching git tag. Decide whether you track upstream or diverge, because
+   divergence makes future rebases harder.
 
 ## Status
 
 | Tier | Files | Done |
 |---|---|---|
-| C | 3 | **1** (`security-scan` description) |
+| C | 3 | **3 — complete** |
 | A | 30 | 0 |
 | B | 13 | 0 |
-| **distinct** | **~40** | **1** |
+| **distinct** | **~40** | **3** |
+
+Tier C landed as three commits, each independently green:
+
+| Commit | Skill | Outcome |
+|---|---|---|
+| `8ee1bc4` | `security-scan` | description stopped advertising `.claude/`; real DSH security surface documented |
+| `e4d06d1` | `configure-ecc` | **retired** — upstream setup wizard for Claude Code / Codex / Kimi, no DSH meaning |
+| `ea65171` | `unified-memory` | broken `scripts/ecc.js` clause removed; `.mcp.json` replaced with a `dsh-mcp-client` row; `ECC_MEMORY_HARNESS=dsh` verified valid |
+
+`configure-ecc` retirement moved the active skill count 274 → 273. The verifier computes
+its count from the expected Set, so it self-updated; the port-coverage metric in the READMEs
+stays at 274/286 (retiring a skill locally does not un-port it).
 
 Update this table as work lands. Do not mark a tier done without a green `npm run verify`.
+
+## Before starting Tier A — read this
+
+Tier A is not the same kind of work as Tier C. Tier C was three files with unambiguous
+defects. Tier A's 30 files split into two very different groups:
+
+**Adaptation candidates** — the skill is useful to a DSH user and just needs harness-correct
+wording: `search-first`, `safety-guard`, `eval-harness`, `cost-tracking`.
+
+**Retirement candidates** — the skill is ECC-internal bookkeeping that only functions alongside
+ECC's hook/agent runtime, which this port deliberately does not ship: `agent-sort`, `config-gc`,
+`hookify-rules`, `rules-distill`, `skill-stocktake`, `skill-scout`, `plankton-code-quality`,
+`inherit-legacy-style`.
+
+Retiring 8–15 skills is a far larger ask of a maintainer than fixing three. Decide the PR
+strategy first:
+
+- **If the goal is a merged PR** — stop after Tier C and open it. Three focused, well-reasoned
+  commits are reviewable; a fifteen-skill deletion is a redesign of the package.
+- **If the goal is your own fork** — Tier A retirements are fine, and arguably should happen.
+  But then the upstream-sync question matters much more.
